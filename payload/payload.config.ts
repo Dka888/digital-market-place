@@ -22,7 +22,7 @@ export default buildConfig({
     user: 'users',
     bundler: webpackBundler(),
     meta: {
-      titleSuffix: '- DigitalHippo',
+      titleSuffix: '- Digital',
       favicon: '/favicon.ico',
       ogImage: '/thumbnail.jpg',
     },
