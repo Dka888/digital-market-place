@@ -31,10 +31,10 @@ const start = async () => {
     app.use((req, res) => nextHandler(req, res))
 
     nextApp.prepare().then(() => {
-        // payload.logger.info('Next started')
+        payload.logger.info('Next started')
 
         app.listen(PORT, async () => {
-            // payload.logger.info(`App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`)
+            payload.logger.info(`App URL: ${process.env.NEXT_PUBLIC_SERVER_URL}`)
         })
     })
 };
