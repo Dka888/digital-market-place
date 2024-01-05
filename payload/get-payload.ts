@@ -9,11 +9,11 @@ path: path.resolve(__dirname, "../.env")
 });
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.resend.com",
+    host: 'smtp.resend.com',
     secure: true,
     port: 465,
     auth: {
-        user: "resend",
+        user: 'resend',
         pass: process.env.RESEND_API_KEY,
     }
 })
