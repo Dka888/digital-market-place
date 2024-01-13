@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image"
 import { useCart } from "../hooks/use-cart";
 import { CartItem } from "./CartItem";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export const Cart = () => {
     const { items } = useCart();
@@ -29,17 +30,19 @@ export const Cart = () => {
         </SheetTrigger>
         <SheetContent className='flex w-full flex-col pr-0 sm:max-w-lg'>
             <SheetHeader className="space-y-2.5 pr-6">
-                <SheetTitle>Cart(0)</SheetTitle>
+                <SheetTitle>Cart({itemCount})</SheetTitle>
             </SheetHeader>
             {itemCount > 0 ? (
             <>
                 <div className='flex w-full flex-col pr-6'>
+                    <ScrollArea>
                     {items.map(({product}) => (
                         <CartItem 
                             key={product.id} 
                             product={product}
                         />
                     ))}
+                    </ScrollArea>
                 </div>
                 <div className="space-y-4 pr-6">
                     <Separator />
