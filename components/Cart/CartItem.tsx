@@ -3,6 +3,7 @@ import { Product } from "@/payload/payload-types";
 import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "../hooks/use-cart";
+import { formatPrice } from "@/lib/utils";
 
 interface CartItemProps {
     product: Product
@@ -49,6 +50,12 @@ export const CartItem = ({ product }: CartItemProps) => {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            <div className='flex flex-col space-y-1 font-medium'>
+                <span className='ml-auto line-clamp-1 text-sm'>
+                    {formatPrice(product.price)}
+                </span>
             </div>
         </div>
     </div>
