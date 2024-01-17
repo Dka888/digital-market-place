@@ -17,17 +17,35 @@ export const Users: CollectionConfig = {
     },
     fields: [
         {
-            name: 'role',
-            defaultValue: 'user',
-            required: true,
-            // admin: {
-            //     condition: ({req}) => req.user.role === 'admin'
-            // },
-            type: 'select',
-            options: [
-                {label: "Admin", value:"admin"},
-                {label: "User", value:"user"},
-            ]
-        }
-    ]
+          name: 'products',
+          label: 'Products',
+          admin: {
+            condition: () => false,
+          },
+          type: 'relationship',
+          relationTo: 'products',
+          hasMany: true,
+        },
+        {
+          name: 'product_files',
+          label: 'Product files',
+          admin: {
+            condition: () => false,
+          },
+          type: 'relationship',
+          relationTo: 'product_files',
+          hasMany: true,
+        },
+        {
+          name: 'role',
+          defaultValue: 'user',
+          required: true,
+    
+          type: 'select',
+          options: [
+            { label: 'Admin', value: 'admin' },
+            { label: 'User', value: 'user' },
+          ],
+        },
+      ],
 }
