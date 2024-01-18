@@ -1,9 +1,12 @@
+import { PaymentStatus } from "@/components/PaymentStatus";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getServerSideUser } from "@/lib/payload-utils";
+import { formatPrice } from "@/lib/utils";
 import { getPayloadClient } from "@/payload/get-payload";
-import { Product, ProductFile } from "@/payload/payload-types";
+import { Product, ProductFile, User } from "@/payload/payload-types";
 import { cookies } from "next/headers";
 import Image from 'next/image';
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 interface ThankYouPageInterface {
@@ -31,6 +34,10 @@ const ThankYouPage = async ({searchParams}: ThankYouPageInterface) => {
     })
 
     const [order] = orders;
+
+    const products = order.products as Product[];
+
+    const total = products.reduce((acc, cur) => acc + Number(cur.price), 0)
 
     if(!order) {
         return notFound()
@@ -107,14 +114,46 @@ const ThankYouPage = async ({searchParams}: ThankYouPageInterface) => {
                                                         href={downloadUrl} 
                                                         download={product.name}
                                                         className='text-green-600 hover:underline underline-offset-2'    
-                                                    ></a>
+                                                    >Download asset</a>
                                                 )}
                                             </div>
+
+                                            <p className='flex-none font-medium text-grey-900'>
+                                                {formatPrice(product.price)}
+                                            </p>
                                         </li>
                                     )
                                     }
                                     )}
                             </ul>
+
+                            <div className='space-y-6 border-grey-200 pt-6 text-sm font-medium text-muted-foreground'>
+                                <div className='flex justify-between'>
+                                    <p>Subtotal</p>
+                                    <p className='text-grey-900'>{formatPrice(total)}</p>
+                                </div>
+                            </div>
+
+                            <div className='space-y-6 border-grey-200 pt-6 text-sm font-medium'>
+                                <div className='flex justify-between'>
+                                    <p>Transaction fee</p>
+                                    <p className='text-grey-900'>{formatPrice(1)}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between border-t border-grey-200 pt-6 text-grey-600">
+                                <p className="text-base">Total</p>
+                                <p className="text-base">{formatPrice(total + 1)}</p>
+                                
+                            </div>
+                        </div>
+
+                        <PaymentStatus orderEmail={(order.user as User).email} orderId={order.id} isPaid={order._isPaid} />
+
+                        <div className="mt-16 border-t border-grey-200 py-6 text-right">
+                            <Link className="text-sm font-medium text-green-500 hover:text-green-600" href='/products'>
+                                Continue shopping &rarr;
+                            </Link>
                         </div>
                 </div>
             </div>
