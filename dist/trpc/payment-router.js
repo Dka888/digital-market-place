@@ -43,7 +43,8 @@ var server_1 = require("@trpc/server");
 var get_payload_1 = require("../payload/get-payload");
 var stripe_1 = require("../lib/stripe");
 exports.paymentRouter = (0, trpc_1.router)({
-    createSession: trpc_1.privateProcedure.input(zod_1.z.object({
+    createSession: trpc_1.privateProcedure
+        .input(zod_1.z.object({
         productIds: zod_1.z.array(zod_1.z.string())
     }))
         .mutation(function (_a) {
@@ -55,6 +56,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                     case 0:
                         user = ctx.user;
                         productIds = input.productIds;
+                        console.log(user, productIds);
                         if (productIds.length === 0) {
                             throw new server_1.TRPCError({
                                 code: "BAD_REQUEST"
