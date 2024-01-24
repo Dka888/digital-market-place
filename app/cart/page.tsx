@@ -18,7 +18,8 @@ const Page = () => {
     const cartTotal = items.reduce((acc, curr) => acc + curr.product.price, 0);
     const [isMounted, setIsMounted] = useState(false);
     const fee = 1;
-    const { mutate: createCheckoutSession, isLoading } = trpc.payment.createSession.useMutation({
+    const { mutate: createCheckoutSession, isLoading } = 
+        trpc.payment.createSession.useMutation({
         onSuccess: ({url}) => {
             if(url) {
                 router.push(url)
@@ -149,7 +150,8 @@ const Page = () => {
 
                         <div className='flex items-center justify-between border-t border-grey-200 pt-4'>
                             <div className='text-base font-medium text-grey-900'>Order Total</div>
-                            <div className='text-base font-medium text-grey-900'>  {isMounted 
+                            <div className='text-base font-medium text-grey-900'>  
+                                {isMounted 
                                     ? formatPrice(fee + cartTotal) 
                                     : <Loader2 className='h-4 w-4 animate-spin text-muted-foreground' />
                                 }</div>
@@ -162,7 +164,7 @@ const Page = () => {
                             onClick={() => createCheckoutSession({ productIds })}
                             className='w-full' 
                             size='lg'
-                            disabled={isLoading || !!items.length}
+                            disabled={isLoading || !items.length}
                         > {isLoading && <Loader2 className="w-4 h-4 mr-1.5 animate-spin"/>}
                             Checkout</Button>
                     </div>

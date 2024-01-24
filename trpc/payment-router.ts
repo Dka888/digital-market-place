@@ -6,12 +6,14 @@ import { stripe } from '../lib/stripe';
 import type Stripe from 'stripe';
 
 export const paymentRouter = router({
-    createSession: privateProcedure.input(z.object({
+    createSession: privateProcedure
+    .input(z.object({
         productIds: z.array(z.string())
     }))
     .mutation(async ({ctx, input}) => {
         const {user} = ctx;
         let { productIds } = input;
+        console.log(user, productIds)
 
         if(productIds.length === 0) {
             throw new TRPCError({
