@@ -5,7 +5,7 @@ import payload, { Payload } from "payload";
 import nodemailer from 'nodemailer';
 
 dotenv.config({
-    path: path.resolve(__dirname, "../../.env"),
+    path: path.resolve(__dirname, "../.env"),
 });
 
 const transporter = nodemailer.createTransport({
@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
         user: 'resend',
         pass: process.env.RESEND_API_KEY,
     }
-})
+});
 
 let cached = (global as any).payload;
 

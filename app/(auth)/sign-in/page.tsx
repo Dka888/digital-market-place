@@ -79,7 +79,7 @@ const Page = () => {
                     variant: 'link',
                     className: "gap-1.5"
                 })}>
-                    Have no account yet? Sing up
+                    Have no account yet? Sign up
                     <ArrowRight className="h-4 w-4"/>
                 </Link>
             </div>

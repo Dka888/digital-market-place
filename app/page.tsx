@@ -30,7 +30,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold tracking-tight text-grey-900 sm:text-6xl">
         Your marketplace for <span className="text-green-600">digital assets.</span>
       </h1>
-      <p className="mt-6 test-lg max-w-prose text-muted-foreground">
+      <p className="mt-6 text-lg max-w-prose text-muted-foreground">
         Welcome to BeastMarketplace. 
         Every asset on our platform is verified 
         by our ensure our highest quality standards.

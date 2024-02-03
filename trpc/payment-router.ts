@@ -13,7 +13,6 @@ export const paymentRouter = router({
     .mutation(async ({ctx, input}) => {
         const {user} = ctx;
         let { productIds } = input;
-        console.log(user, productIds)
 
         if(productIds.length === 0) {
             throw new TRPCError({

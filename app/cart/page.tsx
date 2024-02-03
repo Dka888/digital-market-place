@@ -71,7 +71,7 @@ const Page = () => {
                                                 fill 
                                                 src={image?.url} 
                                                 alt='product image' 
-                                                className='h-full w-full rounded-md object-cover object-center sm: h-48 sm:w-48'
+                                                className='h-full w-full rounded-md object-cover object-center sm:h-48 sm:w-48'
                                             />
                                             : null
                                         }
@@ -127,8 +127,8 @@ const Page = () => {
 
                     <div className="mt-6 space-y-4">
                         <div className='flex items-center justify-between'>
-                            <p className='text-sm text-gre-600'>Subtitle</p>
-                            <p className='text-sm text-gre-900 font-medium'>
+                            <p className='text-sm text-grey-600'>Subtitle</p>
+                            <p className='text-sm text-grey-900 font-medium'>
                                 {isMounted 
                                     ? formatPrice(cartTotal) 
                                     : <Loader2 className='h-4 w-4 animate-spin text-muted-foreground' />

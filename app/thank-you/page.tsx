@@ -71,7 +71,7 @@ const ThankYouPage = async ({searchParams}: ThankYouPageInterface) => {
                     {order._isPaid 
                         ? <p className="mt-2 text-base text-muted-foreground">
                             Your order was processed and your assets are available to download below. 
-                            We&appos;ve sent your receipt and order details to {' '}
+                            We&apos;ve sent your receipt and order details to {' '}
                             {typeof order.user !== "string"  && (<span className="font-medium text-grey-900">{order.user.email}</span>)}.
                         </p> 
                         : <p className='mt-2 text-base text-muted-foreground'>
