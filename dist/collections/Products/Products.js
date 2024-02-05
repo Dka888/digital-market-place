@@ -103,35 +103,47 @@ var syncUser = function (_a) {
         });
     });
 };
-//   const isAdminOrHasAccess =
-//   (): Access =>
-//   ({ req: { user: _user } }) => {
-//     const user = _user as User | undefined
-//     if (!user) return false
-//     if (user.role === 'admin') return true
-// const userProductIDs = (user.products || []).reduce<Array<string>>((acc, product) => {
-//   if (!product) return acc
-//   if (typeof product === 'string') {
-//     acc.push(product)
-//   } else {
-//     acc.push(product.id)
-//   }
-//   return acc
-// }, [])
-//     return {
-//       id: {
-//         in: userProductIDs,
-//       },
-//     }
-//   }
+var isAdminOrHasAccess = function () {
+    return function (_a) {
+        var _user = _a.req.user;
+        var user = _user;
+        if (!user)
+            return false;
+        if (user.role === 'admin')
+            return true;
+        var userProductIDs = (user.products || []).reduce(function (acc, product) {
+            if (!product)
+                return acc;
+            if (typeof product === 'string') {
+                acc.push(product);
+            }
+            else {
+                acc.push(product.id);
+            }
+            return acc;
+        }, []);
+        return {
+            id: {
+                in: userProductIDs,
+            },
+        };
+    };
+};
 exports.Products = {
-    slug: "products",
+    slug: 'products',
     admin: {
-        useAsTitle: "name"
+        useAsTitle: 'name',
     },
-    access: {},
+    access: {
+        read: isAdminOrHasAccess(),
+        update: isAdminOrHasAccess(),
+        delete: isAdminOrHasAccess(),
+    },
     hooks: {
-        beforeChange: [addUser, function (args) { return __awaiter(void 0, void 0, void 0, function () {
+        afterChange: [syncUser],
+        beforeChange: [
+            addUser,
+            function (args) { return __awaiter(void 0, void 0, void 0, function () {
                 var data, createdProduct, updated, data, updatedProduct, updated;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
@@ -163,42 +175,43 @@ exports.Products = {
                         case 4: return [2 /*return*/];
                     }
                 });
-            }); }],
+            }); },
+        ],
     },
     fields: [
         {
-            name: "user",
-            type: "relationship",
-            relationTo: "users",
+            name: 'user',
+            type: 'relationship',
+            relationTo: 'users',
             required: true,
             hasMany: false,
             admin: {
                 condition: function () { return false; },
-            }
+            },
         },
         {
-            name: "name",
-            label: "Name",
-            type: "text",
+            name: 'name',
+            label: 'Name',
+            type: 'text',
             required: true,
         },
         {
-            name: "description",
-            type: "textarea",
-            label: "Product details"
+            name: 'description',
+            type: 'textarea',
+            label: 'Product details',
         },
         {
-            name: "price",
-            label: "Price",
+            name: 'price',
+            label: 'Price in USD',
             min: 0,
-            max: 10000,
-            type: "number",
+            max: 1000,
+            type: 'number',
             required: true,
         },
         {
-            name: "category",
-            label: "Category",
-            type: "select",
+            name: 'category',
+            label: 'Category',
+            type: 'select',
             options: config_1.PRODUCT_CATEGORIES.map(function (_a) {
                 var label = _a.label, value = _a.value;
                 return ({ label: label, value: value });
@@ -206,89 +219,90 @@ exports.Products = {
             required: true,
         },
         {
-            name: "product_files",
-            label: "Product file(s)",
-            type: "relationship",
+            name: 'product_files',
+            label: 'Product file(s)',
+            type: 'relationship',
             required: true,
-            relationTo: "product_files",
+            relationTo: 'product_files',
             hasMany: false,
         },
         {
-            name: "approveForSale",
-            label: "Product status",
-            type: "select",
-            defaultValue: "pending",
+            name: 'approvedForSale',
+            label: 'Product Status',
+            type: 'select',
+            defaultValue: 'pending',
             access: {
                 create: function (_a) {
                     var req = _a.req;
-                    return req.user.role === "admin";
+                    return req.user.role === 'admin';
                 },
                 read: function (_a) {
                     var req = _a.req;
-                    return req.user.role === "admin";
+                    return req.user.role === 'admin';
                 },
                 update: function (_a) {
                     var req = _a.req;
-                    return req.user.role === "admin";
+                    return req.user.role === 'admin';
                 },
             },
             options: [
                 {
-                    label: "Pending verification",
-                    value: "pending"
+                    label: 'Pending verification',
+                    value: 'pending',
                 },
                 {
-                    label: "Approved",
-                    value: "approved"
+                    label: 'Approved',
+                    value: 'approved',
                 },
                 {
-                    label: "Denied",
-                    value: "denied",
-                }
+                    label: 'Denied',
+                    value: 'denied',
+                },
             ],
-        }, {
-            name: "priceId",
+        },
+        {
+            name: 'priceId',
             access: {
                 create: function () { return false; },
                 read: function () { return false; },
-                update: function () { return false; }
+                update: function () { return false; },
             },
-            type: "text",
+            type: 'text',
             admin: {
                 hidden: true,
-            }
+            },
         },
         {
-            name: "stripeId",
+            name: 'stripeId',
             access: {
                 create: function () { return false; },
                 read: function () { return false; },
-                update: function () { return false; }
+                update: function () { return false; },
             },
-            type: "text",
+            type: 'text',
             admin: {
                 hidden: true,
-            }
+            },
         },
         {
-            name: "images",
-            type: "array",
-            label: "Product images",
+            name: 'images',
+            type: 'array',
+            label: 'Product images',
             minRows: 1,
-            maxRows: 5,
+            maxRows: 4,
             required: true,
             labels: {
-                singular: "Image",
-                plural: "Images"
+                singular: 'Image',
+                plural: 'Images',
             },
             fields: [
                 {
-                    name: "image",
-                    type: "upload",
-                    relationTo: "media",
+                    name: 'image',
+                    type: 'upload',
+                    relationTo: 'media',
                     required: true,
-                }
-            ]
-        }
-    ]
+                },
+            ],
+        },
+    ],
 };

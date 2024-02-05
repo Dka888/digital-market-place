@@ -68,11 +68,13 @@ var get_payload_1 = require("../payload/get-payload");
 exports.appRouter = (0, trpc_1.router)({
     auth: auth_router_1.authRouter,
     payment: payment_router_1.paymentRouter,
-    getInfiniteProducts: trpc_1.publicProcedure.input(zod_1.z.object({
+    getInfiniteProducts: trpc_1.publicProcedure
+        .input(zod_1.z.object({
         limit: zod_1.z.number().min(1).max(100),
         cursor: zod_1.z.number().nullish(),
         query: query_validator_1.QueryValidator
-    })).query(function (_a) {
+    }))
+        .query(function (_a) {
         var input = _a.input;
         return __awaiter(void 0, void 0, void 0, function () {
             var query, cursor, sort, limit, queryOpts, payload, parsedQueryOpts, page, _b, items, hasNextPage, nextPage;
@@ -94,7 +96,7 @@ exports.appRouter = (0, trpc_1.router)({
                         page = cursor || 1;
                         return [4 /*yield*/, payload.find({
                                 collection: "products",
-                                where: __assign({ approveForSale: {
+                                where: __assign({ approvedForSale: {
                                         equals: "approved"
                                     } }, parsedQueryOpts),
                                 sort: sort,

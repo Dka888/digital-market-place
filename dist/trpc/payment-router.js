@@ -56,7 +56,6 @@ exports.paymentRouter = (0, trpc_1.router)({
                     case 0:
                         user = ctx.user;
                         productIds = input.productIds;
-                        console.log(user, productIds);
                         if (productIds.length === 0) {
                             throw new server_1.TRPCError({
                                 code: "BAD_REQUEST"

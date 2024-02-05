@@ -9,15 +9,17 @@ export const appRouter = router({
     auth: authRouter,
     payment: paymentRouter,
 
-    getInfiniteProducts: publicProcedure.input(z.object({
-        limit: z.number().min(1).max(100),
-        cursor: z.number().nullish(),
-        query: QueryValidator
-    })).query(async ({ input }) => {
-        const { query, cursor } = input;
-        const { sort, limit, ...queryOpts } = query;
+    getInfiniteProducts: publicProcedure
+        .input(z.object({
+            limit: z.number().min(1).max(100),
+            cursor: z.number().nullish(),
+            query: QueryValidator
+        }))
+        .query(async ({ input }) => {
+            const { query, cursor } = input;
+            const { sort, limit, ...queryOpts } = query;
 
-        const payload = await getPayloadClient();
+            const payload = await getPayloadClient();
 
         const parsedQueryOpts: Record<string, {equals: string}> = {};
 
@@ -32,7 +34,7 @@ export const appRouter = router({
         const {docs: items, hasNextPage, nextPage} = await payload.find({
             collection: "products",
             where: {
-                approveForSale: {
+                approvedForSale: {
                     equals: "approved"
                 },
                 ...parsedQueryOpts,

@@ -32,7 +32,7 @@ const Page = async ({ params }: PageProps) => {
             id: {
                 equals: productId,
             },
-            approveForSale: {
+            approvedForSale: {
                 equals: 'approved',
             }
         }

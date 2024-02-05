@@ -41,7 +41,8 @@ var get_payload_1 = require("../payload/get-payload");
 var stripe_1 = require("../lib/stripe");
 var resend_1 = require("resend");
 var ReceiptEmail_1 = require("../components/email/ReceiptEmail");
-var resend = new resend_1.Resend(process.env.RESEND_API_KEY);
+var resendApiKey = process.env.RESEND_API_KEY;
+var resend = new resend_1.Resend(resendApiKey);
 var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var webhookRequest, body, signature, event, session, payload, users, user, orders, order, data, error_1;
     var _a, _b;
@@ -114,16 +115,14 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                                 equals: session.metadata.orderId,
                             },
                         },
-                    })
-                    // send receipt
-                ];
+                    })];
             case 4:
                 _c.sent();
                 _c.label = 5;
             case 5:
                 _c.trys.push([5, 7, , 8]);
                 return [4 /*yield*/, resend.emails.send({
-                        from: 'DigitalHippo <hello@joshtriedcoding.com>',
+                        from: 'Digital <dymitrkosow@gmail.com>',
                         to: [user.email],
                         subject: 'Thanks for your order! This is your receipt.',
                         html: (0, ReceiptEmail_1.ReceiptEmailHtml)({
